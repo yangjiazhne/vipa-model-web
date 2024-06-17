@@ -4,11 +4,18 @@
             <div class="model-select">
                 <div class="title">{{ $t("creator.dataset.selectTitle") }}</div>
                 <div class="model">
-                   <el-card v-for="(item,index) in datasetList" :key="index" shadow="hover"
-                            :class="[creatorInfo.dataset_id === item.id ?'selected':'']"
-                            @click.native="menuSelect(item.id)">
-                    <div class="model-name">{{ item.name }}</div>
-                   </el-card> 
+                    <el-card shadow="hover" v-for="(item,index) in datasetList" :key="index" v-if="item.selectable"
+                                :class="['selectable', creatorInfo.dataset_id === item.id ?'selected':'']"
+                                @click.native="menuSelect(item.id)">
+                        <div class="model-name">{{ item.name }}</div>
+                    </el-card> 
+                    <el-tooltip content="选择权重的训练数据集和评估数据集不一致" placement="right" effect="light"
+                                v-for="(item,index) in datasetList" :key="index" v-if="!item.selectable">
+                        <el-card shadow="never"
+                                    class="not-selectable">
+                            <div class="model-name">{{ item.name }}</div>
+                        </el-card> 
+                    </el-tooltip>
                 </div>
                 <!-- <div class="upload" @click="drawer=true">
                     <el-button type="primary" plain disabled class="upload-button">
@@ -60,6 +67,18 @@ export default {
         this.$store.dispatch('getDatasetList')
         this.selected = this.creatorInfo.dataset_id
     },
+    watch: {
+        datasetList(newValue) {
+            const param = this.paramList.find(item => item.id === this.creatorInfo.parameter_id)
+            const aspect = this.$route.params.aspect
+            if (newValue.length > 0 && aspect === 'correctness') {
+                this.datasetList.map(item=>{
+                    if(param.train_dataset_name !== item.name)
+                        item.selectable = false
+                })
+            }
+        }
+    },
     methods: {
         menuSelect(id) {
             this.selected = id
@@ -76,7 +95,7 @@ export default {
         selectedDataset() {
             return this.datasetList ? this.datasetList.find(item => (item.id == this.selected)) : null
         },
-        ...mapState(['creatorInfo', 'datasetList'])
+        ...mapState(['creatorInfo', 'datasetList', 'paramList'])
     }
 }
 </script>

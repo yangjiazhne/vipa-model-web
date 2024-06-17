@@ -64,7 +64,7 @@ export default {
     },
     methods: {
         pre() {
-            // this.$store.commit('setCreatorInfo', {perspectives_metrics: null})
+            // this.$store.commit('setCreatorInfo', {metric_ids: null})
             this.$store.commit('setCreatorIndex', 1)
         },
         next() {
@@ -80,11 +80,8 @@ export default {
                 })
             })
 
-            console.log(res)
-            console.log(_perspectiveMetrics)
-
             this.$store.commit('setPerspectiveMetrics', _perspectiveMetrics)
-            this.$store.commit('setCreatorInfo', {perspectives_metrics: res})
+            this.$store.commit('setCreatorInfo', {metric_ids: res})
             this.$store.commit('setCreatorIndex', 3)
         },
         refreshSelectd(){
@@ -114,8 +111,6 @@ export default {
             }
         })
 
-        console.log(this.perspectiveList)
-
         this.perspectiveList.map(item => {
             this.defaultMetrics.push([])
             this.userMetrics.push([])
@@ -133,7 +128,7 @@ export default {
             else this.userMetrics[index].push(item.name)
         })
 
-        if(this.creatorInfo.perspectives_metrics){
+        if(this.creatorInfo.metric_ids){
             this.refreshSelectd()
         }
 

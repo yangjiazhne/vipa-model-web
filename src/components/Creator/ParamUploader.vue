@@ -5,7 +5,7 @@
                 <div class="title">{{ $t("creator.param.selectTitle") }}</div>
                 <div class="model">
                    <el-card v-for="(item,index) in paramList" :key="index" shadow="hover"
-                            :class="[creatorInfo.parameter_id === item.id ?'selected':'']"
+                            :class="['selectable', creatorInfo.parameter_id === item.id ?'selected':'']"
                             @click.native="menuSelect(item.id)">
                     <div class="model-name">{{ item.name }}</div>
                    </el-card> 
@@ -98,6 +98,7 @@ export default {
     mounted() {
         this.$store.dispatch('getParamList')
         this.selected = this.creatorInfo.parameter_id
+        if(this.$route.params.aspect === 'correctness') this.$store.commit('setCreatorInfo', {"dataset_id": "-1"})
     },
     computed: {
         selectedParam() {

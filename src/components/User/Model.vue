@@ -13,7 +13,7 @@
             </el-table-column>
             <el-table-column :label="$t('modelTable.description')" width="300" align="center">
                 <template #default="{ row }">
-                    <el-tooltip :content="row.description" placement="top" dark="light">
+                    <el-tooltip :content="row.description" placement="top" effect="light">
                         <div class="ellipsis">{{ row.description }}</div>
                     </el-tooltip>
                 </template>
@@ -77,19 +77,39 @@ export default {
 
 <style lang="scss">
     /* tooltip三角箭头部分 */
-    .el-tooltip__popper .popper__arrow {
-        /* 上方箭头 */
+    .el-tooltip__popper[x-placement^=top] .popper__arrow {
         border-top-color: #fff !important;
-        /* 下方箭头 */
+    }
+    .el-tooltip__popper[x-placement^=top] .popper__arrow:after {
+        border-top-color: #fff !important;
+    }
+
+    .el-tooltip__popper[x-placement^=bottom] .popper__arrow {
         border-bottom-color: #fff !important;
     }
-    .el-tooltip__popper .popper__arrow:after {
-        border-top-color: #fff !important;
+    .el-tooltip__popper[x-placement^=bottom] .popper__arrow:after {
         border-bottom-color: #fff !important;
+    }
+
+    .el-tooltip__popper[x-placement^=right] .popper__arrow {
+        border-right-color: #fff !important;
+    }
+    .el-tooltip__popper[x-placement^=right] .popper__arrow:after {
+        border-right-color: #fff !important;
+    }
+
+    .el-tooltip__popper[x-placement^=left] .popper__arrow {
+        border-left-color: #fff !important;
+    }
+    .el-tooltip__popper[x-placement^=left] .popper__arrow:after {
+        border-left-color: #fff !important;
     }
 
     /* tooltip主体部分 */
     .el-tooltip__popper{
+        font-size: 18px;
+        background-color: #fff !important;
+        color: #303133 !important;
         max-width:30% !important;
         border-radius: 4px !important;
         border-color:#e6e6e6 !important;

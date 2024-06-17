@@ -29,7 +29,6 @@ export default {
     name: "TaskSelector",
     methods: {
         select(item) {
-            console.log(item)
             this.$store.commit('setCreatorInfo', {task_id: item.id})
         },
         pre() {

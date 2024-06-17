@@ -12,7 +12,7 @@
             <!-- <el-table-column prop="task" :label="$t('datasetTable.applicableTasks')" width="150" align="center" :show-overflow-tooltip="true"></el-table-column> -->
             <el-table-column :label="$t('datasetTable.description')" width="400" align="center">
             <template #default="{ row }">
-                <el-tooltip :content="row.description" placement="top" dark="light">
+                <el-tooltip :content="row.description" placement="top" effect="light">
                     <div class="ellipsis">{{ row.description }}</div>
                 </el-tooltip>
             </template>
@@ -67,15 +67,4 @@ export default {
 
 <style lang="scss" scoped>
 @import "common";
-</style>
-
-<style lang="scss">
-    .el-tooltip__popper{
-      font-size: 18px; 
-      background-color: #fff !important;
-      color: #303133 !important;
-      border: 1px solid #000;
-      border-radius: 5px;
-      max-width:40%;
-    }/* 设置显示隐藏部分内容，按40%显示 */
 </style>

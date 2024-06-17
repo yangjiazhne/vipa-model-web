@@ -7,7 +7,6 @@ export const userLogin = async function () {
         "password": "123456"
       }
     const response = await axios.post('/users/login/', userData);
-    console.log(response)
     if (response.data.access) {
         localStorage.setItem('access_token', response.data.access);
     }

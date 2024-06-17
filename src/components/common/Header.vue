@@ -120,7 +120,7 @@ export default {
   background-color: $headerBackground;
   box-shadow: 0 2px 4px 0;
   position: fixed;
-  z-index:999;
+  z-index:9999;
 
   .header-container {
     display: flex;

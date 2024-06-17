@@ -111,7 +111,7 @@ export default {
             this.$store.commit('setCreatorIndex', 5)
         },
         async next() {
-            // const res = await createEvaluation(this.creatorInfo)
+            const res = await createEvaluation(this.creatorInfo)
             // if (res.instance_id) {
             //     this.$store.commit('setCreatorInfo', {"instance_id": res.instance_id})
             //     this.$store.commit('setCreatorIndex', 7)
@@ -120,12 +120,12 @@ export default {
             //     //     confirmButtonText: 'can not create job',
             //     // })
             // }
-            this.$router.push('/evaluation/result/' + '999')
+            this.$router.push('/evaluation/result/' + res.instance_id)
         }
     },
     created() {
         const environment = this.envList.find(env => env.id === this.creatorInfo.environment_id)
-        const model = this.modelList.find(arc => arc.id === this.creatorInfo.model_arch_id)
+        const model = this.modelList.find(arc => arc.id === this.creatorInfo.architecture_id)
         const dataset = this.datasetList.find(data => data.id === this.creatorInfo.dataset_id)
         const task = this.taskList.find(t => t.id === this.creatorInfo.task_id)
         const parameter = this.paramList.find(param => param.id === this.creatorInfo.parameter_id)
@@ -180,7 +180,7 @@ export default {
     .metrics-container{
         overflow-y: scroll;
         max-height: 240px;
-        
+
         .metrics-item{
             margin-bottom: 5px;
             display: flex;

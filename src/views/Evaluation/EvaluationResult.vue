@@ -1,19 +1,25 @@
 <template>
-    <div class="result-container">
+    <div class="result-container" v-loading="loading" element-loading-background="rgba(255, 255, 255, 1)">
         <h1 class="title">{{ $t("evaluateResult.title") }}</h1>
         <div class="card-container">
             <div class="result-box">
                 <div class="chart-container">
-                    <div id="chart"/>
-                    <div class="info">
+                    <div id="chart" v-if="evaluateStatus === 'finish'"></div>
+                    <div :class="evaluateStatus === 'finish'? 'info1': 'info2'">
                         <el-descriptions :column="1" border>
-                            <el-descriptions-item :label="$t('creator.evaluate.task')" :contentStyle="{ fontSize: '16px' }">image segmentation</el-descriptions-item>
-                            <el-descriptions-item :label="$t('creator.evaluate.model')" :contentStyle="{ fontSize: '16px' }">vgg16</el-descriptions-item>
-                            <el-descriptions-item :label="$t('creator.evaluate.dataset')" :contentStyle="{ fontSize: '16px' }">vgg16</el-descriptions-item>
-                            <el-descriptions-item label="当前状态" :contentStyle="{ fontSize: '16px' }">image segmentation</el-descriptions-item>
+                            <el-descriptions-item :label="$t('evaluateResult.task')" :contentStyle="{ fontSize: '16px' }">{{evaluationInfo.task_name}}</el-descriptions-item>
+                            <el-descriptions-item :label="$t('evaluateResult.model')" :contentStyle="{ fontSize: '16px' }">{{evaluationInfo.architecture_name}}</el-descriptions-item>
+                            <el-descriptions-item :label="$t('evaluateResult.dataset')" :contentStyle="{ fontSize: '16px' }">{{evaluationInfo.dataset_name}}</el-descriptions-item>
+                            <el-descriptions-item :label="$t('evaluateResult.param')" :contentStyle="{ fontSize: '16px' }">{{evaluationInfo.parameter_name}}</el-descriptions-item>
+                            <el-descriptions-item :label="$t('evaluateResult.state')" :contentStyle="{ fontSize: '16px' }">
+                                <el-tag v-if="evaluateStatus === 'inProcess'">{{$t('evaluateResult.inprocess')}}</el-tag>
+                                <el-tag type="success" v-else-if="evaluateStatus === 'finish'">{{$t('evaluateResult.finish')}}</el-tag>
+                                <el-tag type="danger" v-else-if="evaluateStatus === 'error'">{{$t('evaluateResult.errer')}}</el-tag>
+                            </el-descriptions-item>
                         </el-descriptions>
                     </div>
                 </div>
+                <div class="divider-container"><div class="result-divider"></div></div>
                 <div v-if="evaluateStatus === 'inProcess'" class="table-box">
                     <div class="process">
                         <div class="progess-label">{{ $t('evaluating.progress') }}:</div>
@@ -22,50 +28,31 @@
                 </div>
                 <div v-else-if="evaluateStatus === 'error'" class="table-box">
                     <div class="error">
-                    Anim ullamco amet exercitation aliquip velit aliqua nisi fugiat commodo sed labore.
-                    Anim ullamco amet exercitation aliquip velit aliqua nisi fugiat commodo sed labore.
-                    Anim ullamco amet exercitation aliquip velit aliqua nisi fugiat commodo sed labore.
-                    Anim ullamco amet exercitation aliquip velit aliqua nisi fugiat commodo sed labore.
-                    Anim ullamco amet exercitation aliquip velit aliqua nisi fugiat commodo sed labore.
-                    Anim ullamco amet exercitation aliquip velit aliqua nisi fugiat commodo sed labore.
-                    Anim ullamco amet exercitation aliquip velit aliqua nisi fugiat commodo sed labore.
-                    Anim ullamco amet exercitation aliquip velit aliqua nisi fugiat commodo sed labore.
-                    Anim ullamco amet exercitation aliquip velit aliqua nisi fugiat commodo sed labore.
-
-                    Anim ullamco amet exercitation aliquip velit aliqua nisi fugiat commodo sed labore.
-                    Anim ullamco amet exercitation aliquip velit aliqua nisi fugiat commodo sed labore.
-                    Anim ullamco amet exercitation aliquip velit aliqua nisi fugiat commodo sed labore.
-                    Anim ullamco amet exercitation aliquip velit aliqua nisi fugiat commodo sed labore.
-                    Anim ullamco amet exercitation aliquip velit aliqua nisi fugiat commodo sed labore.
-                    Anim ullamco amet exercitation aliquip velit aliqua nisi fugiat commodo sed labore.
-                    Anim ullamco amet exercitation aliquip velit aliqua nisi fugiat commodo sed labore.
-                    Anim ullamco amet exercitation aliquip velit aliqua nisi fugiat commodo sed labore.
-                    Anim ullamco amet exercitation aliquip velit aliqua nisi fugiat commodo sed labore.
-                    Anim ullamco amet exercitation aliquip velit aliqua nisi fugiat commodo sed labore.
+                    {{ evaluateMessage }}
                     </div>
                 </div>
-                <div v-else class="table-box2">
+                <div v-else-if="evaluateStatus === 'finish'" class="table-box2">
                     <div class="finish">
                         <el-table :data="tableData?tableData.slice((currentPage - 1) * pageSize, currentPage * pageSize):[]"
                             empty-text="empty"
-                            style="width: 100%"
+                            style="width: 100%; min-height: 300px;"
                             :header-cell-style="{background:'#fafafa',color:'#000', fontSize: '16px', lineHeight:'30px'}"
                             :header-row-style="{height: '40px'}"
                             :row-style="{height: '40px', background:'#ffffff',lineHeight:'20px'}">>
                             <el-table-column
-                                    prop="perspective_name"
-                                    :label="$t('evaluateResult.perspectives')"
-                                    width="200" align="center">
-                            </el-table-column>
-                            <el-table-column
                                     prop="metric_name"
                                     :label="$t('evaluateResult.metrics')"
-                                    width="200" align="center">
+                                    width="260" align="center">
+                            </el-table-column>
+                            <el-table-column
+                                    prop="perspective_name"
+                                    :label="$t('evaluateResult.perspectives')"
+                                    width="280" align="center">
                             </el-table-column>
                             <el-table-column
                                     prop="score"
                                     :label="$t('evaluateResult.result')"
-                                    width="200" align="center">
+                                    width="260" align="center">
                             </el-table-column>
                         </el-table>
                         <el-pagination
@@ -80,6 +67,9 @@
                     </div>
                     
                 </div>
+                <div v-else class="table-box">
+                    <el-empty :image-size="200"></el-empty>
+                </div>
             </div>
         </div>
     </div>
@@ -87,7 +77,8 @@
 
 <script>
 import * as echarts from 'echarts';
-import {mapState} from "vuex";
+import {getEvaluationInfo, getModelStatus} from "@/models/EvaluationModel"
+
 export default {
     name: "EvaluationResult",
     data() {
@@ -98,40 +89,66 @@ export default {
             currentPage: 1,
             pageSize: 6,
             
-            evaluateStatus: 'finish',
+            evaluateStatus: null,
             evaluateMessage: null,
-            evaluationResult: [],
+            result: [],
+            evaluationScore: [],
             evaluationInfo: {},
 
             percent: 0,
-            timer: null,
+            loading: true,
+            statusTimer: null,
             instance_id: -1,
         }
     },
-    async mounted() {
+    mounted() {
+        this.$watch(
+            () => this.evaluateStatus,
+            (newValue) => {
+                if (newValue) this.loading = false
+            },
+            { immediate: true }
+        )
+    },
+    created() {
         this.instance_id = this.$route.params.id
-        // this.evaluationInfo = await getEvaluationInfo(instance_id)
-        // this.timer = setInterval(async () => {
-        //     const res = await getModelStatus(instance_id)
-        //     if (res.condition == 1) {
-        //         //wrong
-        //         this.evaluateStatus = 'error'
-        //         this.evaluateMessage = res.fault
-        //         clearInterval(this.timer)
-        //     } else if (res.condition == 2) {
-        //         //finish
-        //         this.evaluateStatus = 'finish'
-        //         this.evaluateMessage = res.evaluate_score
-        //         clearInterval(this.timer)
-        //     } else if (res.condition == 3) {
-        //         //in process
-        //         this.percent = res.process
-        //     }
-        // }, 2000)
+        // this.evaluationInfo = await getEvaluationInfo(this.instance_id)
+        this.fetchEvaluationInfo()
+        if (!this.statusTimer) {
+            this.statusTimer = window.setInterval(async () => {
+                const res = await getModelStatus(this.instance_id)
+                if (res.condition == 1) {
+                    //in process
+                    this.evaluateStatus = 'inProcess'
+                    if(res.process) {
+                        this.percent = parseInt(res.process * 100);
+                    }
+                } else if (res.condition == 2) {
+                    window.clearInterval(this.statusTimer)
+                    this.statusTimer = null;
+                    //finish
+                    this.evaluateStatus = 'finish'
+                    this.result = res.evaluate_score
+                    this.initData()                    
+                } else if (res.condition == 3) {
+                    //wrong
+                    window.clearInterval(this.statusTimer)
+                    this.statusTimer = null;
+                    this.evaluateStatus = 'error'
+                    this.evaluateMessage = res.fault_info    
+                } else if (res.condition == 0) {
+                    //未开始
+                    this.evaluateStatus = 'inProcess'
+                }
+            }, 2000)
+        }
     },
     methods: {
+        async fetchEvaluationInfo() {
+            this.evaluationInfo = await getEvaluationInfo(this.instance_id);
+        },
         initData() {
-            this.evaluationResult = this.result.reduce((pre, cur) => {
+            this.evaluationScore = this.result.reduce((pre, cur) => {
                 const sum = cur.metrics.reduce((p, c) => (p + c.metric_score), 0)
                 pre.push({name: cur.perspective_name, value: ((sum * 100.) / cur.metrics.length).toFixed(2)})
                 return pre
@@ -145,21 +162,27 @@ export default {
                     })
                 })
             })
-            this.initChart()
+            this.$nextTick(() => {
+                this.initChart()
+            })
         },
         initChart() {
             let chartDom = document.getElementById('chart');
             let myChart = echarts.init(chartDom);
             let indicator = []
             let value = []
-            this.evaluationResult.map(e => {
+            this.evaluationScore.map(e => {
                 indicator.push({text: e.name, max: 100})
                 value.push(e.value)
             })
             this.radarOption = {
                 radar: {
                     indicator: indicator,
-                    radius: 60,
+                    radius: 100,
+                    center: ['50%', '60%'],
+                    axisName: {
+                        color: '#606266'
+                    },
                 },
                 series: [{
                     name: 'evaluation result',
@@ -170,7 +193,7 @@ export default {
                         }
                     ],
                     itemStyle: {
-                        color: '#488bd9'
+                        color: '#488bd9',
                     },
                     areaStyle: {
                         color: '#488bd9',
@@ -178,6 +201,7 @@ export default {
                     },
                     label: {
                         show: true,
+                        color: '#606266',
                         position: 'right',
                         formatter: function (params) {
                             return params.value;
@@ -190,9 +214,6 @@ export default {
         handleCurrentChange(newPage) {
             this.currentPage = newPage;
         },
-    },
-    computed: {
-        ...mapState(['evaluateStatus', 'evaluateResult', 'evaluateMessage'])
     }
 }
 </script>
@@ -210,6 +231,7 @@ export default {
 
   .card-container{
     width: 90%;
+    padding: 10px 20px;
     margin: 20px auto;
     border-radius: 8px;
     box-shadow: 0 0 15px #ededed;
@@ -217,9 +239,10 @@ export default {
     .result-box{     
         margin:20px auto;   
         .table-box{
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 15px #ededed;
+            margin: 10px 20px;
+            padding: 20px 10px;
+            border-radius: 4px;
+            box-shadow: 0 0 4px #ededed;
             align-items: center;
             justify-content: center;
             min-height: 300px;
@@ -238,7 +261,7 @@ export default {
             }
 
             .error{
-                width: 90%;
+                width: 96%;
                 height: 260px;
                 overflow-y: scroll;
                 text-indent:2em;
@@ -250,14 +273,19 @@ export default {
 
         .table-box2{
             padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 15px #ededed;
+            // border-radius: 8px;
+            // box-shadow: 0 0 15px #ededed;
             justify-content: center;
             min-height: 300px;
             display: flex;
 
             .finish{
                 margin-top: 20px;
+
+                .el-table{
+                    font-size: 20px;
+                }
+
                 .el-pagination {
                     text-align: center;
                     margin-top: 20px;
@@ -294,26 +322,57 @@ export default {
             }
         }
 
+        .divider-container{
+            display: flex;
+            height: 30px;
+            align-items: center;
+            justify-content: center;     
+            .result-divider{    
+                display: block;
+                height: 1px;
+                width: 96%;
+                background-color: #dcdfe6;
+                position: relative;
+            }
+        }
+
         .chart-container {
-            margin-right: 20px;
-            padding: 20px;
-            box-shadow: 0 0 15px #ededed;
+            // box-shadow: 0 0 15px #ededed;
             display: flex;
 
             #chart {
-                width: 330px;
-                height: 300px;
+                width: 400px;
+                height: 340px;
                 //background: red;
             }
 
-            .info {
+            .info1 {
                 width: 650px;
-                margin: 0 auto;
+                margin: 30px auto;
 
                 /deep/ .el-descriptions-item__label{
                     width: 200px;
                     font-size: 20px;
                     font-weight: bold;
+                }
+
+                .el-tag {
+                    font-size: 16px;
+                }
+            }
+
+            .info2 {
+                width: 1100px;
+                margin: 30px auto;
+
+                /deep/ .el-descriptions-item__label{
+                    width: 200px;
+                    font-size: 20px;
+                    font-weight: bold;
+                }
+
+                .el-tag {
+                    font-size: 16px;
                 }
             }
         }
@@ -321,5 +380,10 @@ export default {
     
   }
 
+}
+</style>
+<style lang="scss">
+.el-progress-bar {
+    width: 95%;
 }
 </style>

@@ -5,7 +5,7 @@
                 <div class="title">{{ $t("creator.arch.selectTitle") }}</div>
                 <div class="model">
                    <el-card v-for="(item,index) in modelList" :key="index" shadow="hover"
-                            :class="[creatorInfo.model_arch_id === item.id ?'selected':'']"
+                            :class="['selectable', creatorInfo.architecture_id === item.id ?'selected':'']"
                             @click.native="menuSelect(item.id)">
                     <div class="model-name">{{ item.name }}</div>
                    </el-card> 
@@ -43,7 +43,7 @@
         </div>
         <div class="btn-group" style="text-align: center;margin-top: 20px">
             <el-button @click="pre">{{$t('operate.pre')}}</el-button>
-            <el-button :disabled="!creatorInfo.model_arch_id" @click="next">{{$t('operate.next')}}</el-button>
+            <el-button :disabled="!creatorInfo.architecture_id" @click="next">{{$t('operate.next')}}</el-button>
             <!-- <el-button @click="next">next</el-button> -->
         </div>
         <el-drawer title="Upload Model Arch"
@@ -128,13 +128,13 @@ export default {
     },
     mounted() {
         this.$store.dispatch('getModelList')
-        this.selected = this.creatorInfo.model_arch_id
+        this.selected = this.creatorInfo.architecture_id
     },
     methods: {
         menuSelect(id) {
             // this.selectedModel = this.modelList.find(item => (item.id === index))
             this.selected = id
-            this.$store.commit('setCreatorInfo', {"model_arch_id": this.selected})
+            this.$store.commit('setCreatorInfo', {"architecture_id": this.selected})
         },
         getTaskNameById(id){
             const item = this.modelList.find(item => item.id === id);
@@ -157,7 +157,7 @@ export default {
             this.$refs['archForm'].resetFields();
             this.drawer = false
             this.$store.dispatch('getModelList')
-            this.selectedModel = this.modelList.find(item => (item.id == this.creatorInfo.model_arch_id))
+            this.selectedModel = this.modelList.find(item => (item.id == this.creatorInfo.architecture_id))
         },
         onError() {
             this.uploading = false

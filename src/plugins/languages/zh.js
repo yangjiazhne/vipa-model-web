@@ -104,7 +104,7 @@ export default {
         empty:'暂无',
         modelName: '模型名称',
         evaluationResult: '评估结果',
-        parameterSize: '参数大小',
+        parameterName: '参数名称',
         user: '用户',
         paperLink: '论文链接',
         codeLink:'代码链接',
@@ -167,10 +167,18 @@ export default {
         progress: '评估进度'
     },
     evaluateResult: {
+        state: '当前状态',
+        task: '任务类型',
+        model: '模型',
+        param:'权重',
+        dataset: '数据集',
         title: '评估结果',
         error:'评估错误',
-        perspectives: 'Perspectives',
+        perspectives: '类别',
         metrics: '指标',
-        result: '结果'
+        result: '结果',
+        inprocess: '进行中',
+        errer: '失败',
+        finish: '已完成'
     }
 }

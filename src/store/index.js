@@ -124,11 +124,12 @@ const store = new Store({
             data.map(item=>{
                 item.update_time = item.update_time.substring(0, 10)
                 item.upload_time = item.upload_time.substring(0, 10)
+                item.selectable = true
             })
             commit('setDatasetList', data)
         },
         async getParamList({commit, state}) {
-            const data = await getParamList(state.creatorInfo.model_arch_id || '')
+            const data = await getParamList(state.creatorInfo.architecture_id || '')
             commit('setParamList', data)
         },
         async getTaskList({commit}) {

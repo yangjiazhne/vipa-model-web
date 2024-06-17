@@ -67,7 +67,7 @@
                     :header-row-style="{height: '60px'}"
                     :row-style="{height: '60px', background:'#ffffff',lineHeight:'30px'}">
                     <el-table-column
-                            prop="model_architecture_name"
+                            prop="architecture_name"
                             :label="$t('leaderBoard.modelName')"
                             align="center">
                     </el-table-column>
@@ -81,8 +81,8 @@
                         </template>
                     </el-table-column>
                     <el-table-column
-                            prop="parameter_size"
-                            :label="$t('leaderBoard.parameterSize')"
+                            prop="parameter_name"
+                            :label="$t('leaderBoard.parameterName')"
                             align="center">
                     </el-table-column>
                     <!-- <el-table-column
@@ -148,8 +148,9 @@ export default {
             dataset: '',
             aspect: '',
             currentPage: 1,
-            pageSize: 2,
-            leaderList: []
+            pageSize: 5,
+            leaderList: [],
+            evaluationScore: [],
         }
     },
     computed: {
@@ -164,344 +165,55 @@ export default {
             const p = this.aspectAll.find( t => t.name === this.$route.params.prop)
             this.aspect = p.id
         }
-        // this.fetchLeaderList()
-        // const data = await getLeaderList(this.task, this.dataset, this.aspect)
-        this.leaderList = [
-                {
-                    "model_architecture_name": "Ruth Rodriguez",
-                    "perspective_result": [
-                        {
-                            "name": "lgxxpqo",
-                            "metrics": [
-                                {
-                                    "name": "mollit exercitation",
-                                    "value": 10
-                                },
-                                {
-                                    "name": "consectetur aute nulla",
-                                    "value": 10
-                                },
-                                {
-                                    "name": "laborum ad nulla pariatur sit",
-                                    "value": 10
-                                },
-                                {
-                                    "name": "culpa amet consequat tempor",
-                                    "value": 10
-                                },
-                                {
-                                    "name": "sunt",
-                                    "value": 10
-                                }
-                            ]
-                        },
-                        {
-                            "name": "qei",
-                            "metrics": [
-                                {
-                                    "name": "in non elit ea",
-                                    "value": 10
-                                },
-                                {
-                                    "name": "ut ex quis Excepteur",
-                                    "value": 10
-                                },
-                                {
-                                    "name": "esse",
-                                    "value": 10
-                                },
-                                {
-                                    "name": "veniam",
-                                    "value": 10
-                                }
-                            ]
-                        },
-                        {
-                            "name": "swolp",
-                            "metrics": [
-                                {
-                                    "name": "sint adipisicing sit est",
-                                    "value": 10
-                                },
-                                {
-                                    "name": "deserunt ullamco qui minim",
-                                    "value": 10
-                                },
-                                {
-                                    "name": "nulla ut eiusmod elit qui",
-                                    "value": 10
-                                }
-                            ]
-                        },
-                        {
-                            "name": "ozdiwsqfr",
-                            "metrics": [
-                                {
-                                    "name": "dolore ut",
-                                    "value": 10
-                                },
-                                {
-                                    "name": "enim",
-                                    "value": 10
-                                },
-                                {
-                                    "name": "culpa in",
-                                    "value": 10
-                                }
-                            ]
-                        },
-                        {
-                            "name": "dzxgo",
-                            "metrics": [
-                                {
-                                    "name": "fugiat ut anim",
-                                    "value": 10
-                                },
-                                {
-                                    "name": "anim pariatur aliqua in",
-                                    "value": 10
-                                }
-                            ]
-                        }
-                    ],
-                    "parameter_size": 7534,
-                    "user": "Anna Harris",
-                    "paper_link": "http://vhcpk.coop/rmqocybir",
-                    "code_link": "http://cpxm.rw/tqltfbes",
-                    "model_instance_id": 460000200601145400
-                },
-                {
-                    "model_architecture_name": "Jeffrey Brown",
-                    "perspective_result": [
-                        {
-                            "name": "bjxhlhb",
-                            "metrics": [
-                                {
-                                    "name": "ut aliquip cillum eiusmod",
-                                    "value": 10
-                                }
-                            ]
-                        },
-                        {
-                            "name": "rfajrmp",
-                            "metrics": [
-                                {
-                                    "name": "amet ad aliqua officia Duis",
-                                    "value": 10
-                                },
-                                {
-                                    "name": "laboris mollit sint Excepteur ut",
-                                    "value": 10
-                                },
-                                {
-                                    "name": "officia eiusmod exercitation",
-                                    "value": 10
-                                },
-                                {
-                                    "name": "commodo ut",
-                                    "value": 10
-                                }
-                            ]
-                        },
-                        {
-                            "name": "rnhfetwux",
-                            "metrics": [
-                                {
-                                    "name": "anim",
-                                    "value": 10
-                                },
-                                {
-                                    "name": "nisi officia sit sint",
-                                    "value": 10
-                                },
-                                {
-                                    "name": "in",
-                                    "value": 10
-                                },
-                                {
-                                    "name": "aute ut exercitation in",
-                                    "value": 10
-                                },
-                                {
-                                    "name": "sunt esse dolor",
-                                    "value": 10
-                                }
-                            ]
-                        },
-                        {
-                            "name": "nrjdjym",
-                            "metrics": [
-                                {
-                                    "name": "exercitation non",
-                                    "value": 10
-                                },
-                                {
-                                    "name": "esse et aliquip",
-                                    "value": 10
-                                },
-                                {
-                                    "name": "do",
-                                    "value": 10
-                                }
-                            ]
-                        },
-                        {
-                            "name": "mxskejjsw",
-                            "metrics": [
-                                {
-                                    "name": "cillum cupidatat laborum",
-                                    "value": 10
-                                }
-                            ]
-                        }
-                    ],
-                    "parameter_size": 8133.1,
-                    "user": "Larry Garcia",
-                    "paper_link": "http://svry.bi/ezreoafkb",
-                    "code_link": "http://zfmgxvgv.museum/qruftg",
-                    "model_instance_id": 150000198907125760
-                },
-                {
-                    "model_architecture_name": "Paul Williams",
-                    "perspective_result": [
-                        {
-                            "name": "lmuxmvddnl",
-                            "metrics": [
-                                {
-                                    "name": "deserunt consectetur aliqua ad",
-                                    "value": 10
-                                },
-                                {
-                                    "name": "proident est occaecat Lorem ut",
-                                    "value": 10
-                                },
-                                {
-                                    "name": "nostrud anim",
-                                    "value": 10
-                                }
-                            ]
-                        },
-                        {
-                            "name": "arykfgv",
-                            "metrics": [
-                                {
-                                    "name": "nisi eiusmod aliqua ut",
-                                    "value": 10
-                                },
-                                {
-                                    "name": "in magna velit",
-                                    "value": 10
-                                },
-                                {
-                                    "name": "mollit exercitation reprehenderit incididunt",
-                                    "value": 10
-                                },
-                                {
-                                    "name": "occaecat incididunt est",
-                                    "value": 10
-                                },
-                                {
-                                    "name": "deserunt commodo aute Duis",
-                                    "value": 10
-                                }
-                            ]
-                        },
-                        {
-                            "name": "qumuo",
-                            "metrics": [
-                                {
-                                    "name": "in veniam laborum ad",
-                                    "value": 10
-                                }
-                            ]
-                        },
-                        {
-                            "name": "jontdzl",
-                            "metrics": [
-                                {
-                                    "name": "ullamco anim cupidatat esse",
-                                    "value": 10
-                                },
-                                {
-                                    "name": "sit ullamco incididunt",
-                                    "value": 10
-                                },
-                                {
-                                    "name": "tempor est ea sit proident",
-                                    "value": 10
-                                }
-                            ]
-                        },
-                        {
-                            "name": "duvuwgisy",
-                            "metrics": [
-                                {
-                                    "name": "Lorem magna eiusmod",
-                                    "value": 10
-                                },
-                                {
-                                    "name": "do laboris minim consectetur ut",
-                                    "value": 10
-                                },
-                                {
-                                    "name": "sint nostrud non minim reprehenderit",
-                                    "value": 10
-                                },
-                                {
-                                    "name": "aute",
-                                    "value": 10
-                                }
-                            ]
-                        }
-                    ],
-                    "parameter_size": 9252.1,
-                    "user": "Scott Martin",
-                    "paper_link": "http://zlnlheyw.sn/bjlmby",
-                    "code_link": "http://eicjuxg.ru/hfo",
-                    "model_instance_id": 320000201004185660
-                }
-            ],
-        this.leaderList.forEach(instance => {
-            instance.perspective_result.forEach(p => {
-                const sum = p.metrics.reduce((pre, cur) => (pre + cur.value), 0)
-                p.score = ((sum * 100) / p.metrics.length).toFixed(2)
-            })
-        })
-        this.leaderList.map((item, index) => {
-            this.$nextTick(() => {
-                this.initChart(item.perspective_result, index)
-            })
-        })
+        this.fetchLeaderList()
+    },
+    watch: {
+      '$route' (to, from) {
+        this.task = this.taskAll[0].id
+        this.dataset = this.datasetAll[0].id
+        if(this.selectMode){
+            this.aspect = this.aspectAll[0].id
+        }else{
+            const p = this.aspectAll.find( t => t.name === this.$route.params.prop)
+            this.aspect = p.id
+        }
+        this.fetchLeaderList()
+      }
     },
     methods: {
         async fetchLeaderList(){
+            this.evaluationScore = []
             const data = await getLeaderList(this.task, this.dataset, this.aspect)
-            this.leaderList = data
-            this.leaderList.forEach(instance => {
-                instance.perspective_result.forEach(p => {
-                    const sum = p.metrics.reduce((pre, cur) => (pre + cur.value), 0)
-                    p.score = ((sum * 100) / p.metrics.length).toFixed(2)
-                })
+            this.leaderList = data.filter(item => item.condition === 2);
+
+            this.leaderList.map(instance => {
+                const score = instance.evaluate_score.reduce((pre, cur) => {
+                    const sum = cur.metrics.reduce((p, c) => (p + c.metric_score), 0)
+                    pre.push({name: cur.perspective_name, value: ((sum * 100.) / cur.metrics.length).toFixed(2)})
+                    return pre
+                }, [])
+                this.evaluationScore.push(score)
             })
-            this.leaderList.map((item, index) => {
+
+            this.evaluationScore.map((item, index) => {
                 this.$nextTick(() => {
-                    this.initChart(item.perspective_result, index)
+                    this.initChart(item, index)
                 })
             })
         },
-        currStationChange(val){
-            console.log(this.task, this.dataset, this.aspect)
+        currStationChange(){
+            this.fetchLeaderList()
         },
         handleClick(row) {
-            console.log(row);
+            this.$router.push('/evaluation/result/' + row.instance_id)
         },
         handleCurrentChange(newPage) {
             this.currentPage = newPage;
-            // this.leaderList.map((item, index) => {
-            //     this.$nextTick(() => {
-            //         this.initChart(item.perspective_result, index)
-            //     })
-            // })
+            this.evaluationScore.map((item, index) => {
+                this.$nextTick(() => {
+                    this.initChart(item, index)
+                })
+            })
         },
         initChart(item, index) {
             let chartDom = document.getElementById(`chart-${index}`);
@@ -509,8 +221,8 @@ export default {
             let indicator = []
             let value = []
             item.map(e => {
-                indicator.push({text: e.name, max: 2000})
-                value.push(e.score)
+                indicator.push({text: e.name, max: 100})
+                value.push(e.value)
             })
             this.radarOption = {
                 radar: {
@@ -535,7 +247,7 @@ export default {
                         opacity: 0.8
                     },
                     label: {
-                        show: false,
+                        show: true,
                         fontSize: 10,
                         fontWeight: 100,
                         position: 'right',

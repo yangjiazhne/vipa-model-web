@@ -106,7 +106,7 @@ export default {
         empty: 'empty',
         modelName: 'Model Name',
         evaluationResult: 'Evaluation Result',
-        parameterSize: 'Parameter Size',
+        parameterName: 'Parameter Name',
         user: 'User',
         paperLink: 'Paper Link',
         codeLink:'Code Link',
@@ -169,10 +169,18 @@ export default {
         progress: 'evaluating progress'
     },
     evaluateResult: {
+        state: 'State',
+        task: 'Task type',
+        model: 'Model',
+        param:'Checkpoint',
+        dataset: 'Dataset',
         title: 'Evaluation Result',
         error:'Evaluation Error',
         perspectives: 'Perspectives',
         metrics: 'Metrics',
-        result: 'Result'
+        result: 'Result',
+        inprocess: 'In Process',
+        errer: 'Failed',
+        finish: 'Finish'
     }
 }

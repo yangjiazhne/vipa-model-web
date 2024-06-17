@@ -29,6 +29,7 @@ import Footer from "./components/common/Footer"
 import Loading from "./components/common/Loading"
 import {userLogin} from '@/models/UserModel'
 import {mapState} from "vuex";
+
 export default {
     data() {
         return {
@@ -40,10 +41,11 @@ export default {
         ...mapState(['datasetAll', 'taskAll', 'aspectAll'])
     },
     async mounted() {
-        const token = localStorage.getItem('access_token')
-        if (!token) {
-            await userLogin();
-        }
+        // const token = localStorage.getItem('access_token')
+        // if (!token) {
+        //     await userLogin();
+        // }
+        await userLogin();
         this.$store.commit('setUserInfo', {});
         this.$store.dispatch('getUserProfile')
         this.$store.dispatch('getTaskAll')

@@ -64,7 +64,6 @@ export default {
         this.$store.commit('setPerspectiveMetrics', null)
         this.$store.commit('resetCreatorInfo')
         const item = this.aspectAll.find(p => p.name === this.aspect)
-        console.log(item.id)
         this.$store.commit('setCreatorInfo', {"aspect_id": item.id})
     },
     watch: {
@@ -74,7 +73,6 @@ export default {
         this.$store.commit('setPerspectiveMetrics', null)
         this.$store.commit('resetCreatorInfo')
         const item = this.aspectAll.find(p => p.name === this.aspect)
-        console.log(item.id)
         this.$store.commit('setCreatorInfo', {"aspect_id": item.id})
       }
     },

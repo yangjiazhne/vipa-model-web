@@ -16,10 +16,11 @@ export const getDatasetList = async function (task) {
     const res = await axios.get('/datasets/list/', {data: {task_id: task}});
     return res.data
 }
-export const getLeaderList = async function (task_id, dataset_id, aspect_ids) {
-    const res = await axios.post('/tasks/result_view/', {task_id, dataset_id, aspect_ids});
+export const getLeaderList = async function (task_id, dataset_id, aspect_id) {
+    const res = await axios.post('/tasks/result_view/', {task_id, dataset_id, aspect_id});
     return res.data
 }
+
 export const getMetricList = async function (task, aspect, perspective) {
     const res = await axios.get('/models/list/metrics/', {params: {task_id: task, aspect_id: aspect, perspective_id: perspective}});
     return res.data
@@ -38,11 +39,11 @@ export const createEvaluation = async function (createInfo) {
 }
 
 export const getModelStatus = async function (instance_id) {
-    const res = await axios.get('/tasks/condition/', {params:{instance_id}});
-    return res.data
+    const res = await axios.post('/tasks/result_view/', {instance_id});
+    return res.data[0]
 }
 
 export const getEvaluationInfo = async function (instance_id) {
-    const res = await axios.get('/tasks/info/', {params:{instance_id}});
-    return res.data
+    const res = await axios.post('/tasks/result_view/', {instance_id});
+    return res.data[0]
 }

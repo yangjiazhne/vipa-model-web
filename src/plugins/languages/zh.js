@@ -176,9 +176,24 @@ export default {
         error:'评估错误',
         perspectives: '类别',
         metrics: '指标',
+<<<<<<< Updated upstream
         result: '结果',
         inprocess: '进行中',
         errer: '失败',
         finish: '已完成'
+=======
+        result: '结果'
+    },
+
+    temp: {
+        modelDoctor: "模型医生",
+        modelDoctorDesc: "通过聚合梯度约束策略来“治疗”模型",
+        paper: "论文📑",
+        launch: "使用🚀",
+        modelSelectLabel: "模型",
+        modelSelectPlaceholder: "选择模型",
+        datasetSelectLabel: "数据集",
+        datasetSelectPlaceholder: "选择一个数据集",
+>>>>>>> Stashed changes
     }
 }

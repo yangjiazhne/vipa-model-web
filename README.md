@@ -1,4 +1,5 @@
 # vipa-model-web
+* node: v16
 
 ## Project setup
 ```

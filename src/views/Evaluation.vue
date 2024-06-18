@@ -11,7 +11,7 @@
 
     <!--    properties-->
     <h1 class="prop-title">{{ $t("title.properties") }}</h1>
-    <div class="block">
+    <div class="block prop-text">
       {{ $t("evaluation.propertiesInfo") }}
     </div>
     <el-row :gutter="40" class="props">
@@ -56,7 +56,7 @@ export default {
 
 .evaluation-container {
   width: 74%;
-  margin: 40px auto;
+  margin: 50px auto 0 auto;
   box-sizing: border-box;
 
   .block {
@@ -66,7 +66,7 @@ export default {
 
   .intro-title{
     margin-bottom: 20px;
-    font-size: 30px;
+    font-size: 22px;
   }
 
   .intro {
@@ -75,7 +75,8 @@ export default {
     @media (max-width: 680px) {
       .text {
         width: 100%;
-        font-size: 22px;
+        font-size: 16px;
+        line-height: 1.5em;
       }
       .logo {
         display: none;
@@ -84,7 +85,8 @@ export default {
     @media (min-width: 680px){
       .text {
         width: 76%;
-        font-size: 22px;
+        font-size: 16px;
+        line-height: 1.5em;
       }
       .logo {
         height: auto;
@@ -124,7 +126,11 @@ export default {
   .prop-title{
     margin-top: 30px;
     margin-bottom: 20px;
-    font-size: 30px;
+    font-size: 22px;
+  }
+
+  .prop-text {
+    font-size: 16px;
   }
 
   .props{
@@ -153,7 +159,7 @@ export default {
         margin-top: 30px;
         text-align: center;
         font-weight: bolder;
-        font-size: 25px;
+        font-size: 16px;
       }
     }
   }

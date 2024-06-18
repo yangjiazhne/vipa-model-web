@@ -178,9 +178,26 @@ export default {
         error:'Evaluation Error',
         perspectives: 'Perspectives',
         metrics: 'Metrics',
+<<<<<<< Updated upstream
         result: 'Result',
         inprocess: 'In Process',
         errer: 'Failed',
         finish: 'Finish'
+=======
+        result: 'Result'
+    },
+
+    temp: {
+        modelDoctor: "Model Doctor",
+        modelDoctorDesc: "Optimizing your model with gradient aggregation strategy.",
+        paper: "Paper📑",
+        launch: "Demo🚀",
+        modelSelectLabel: "Model",
+        modelSelectPlaceholder: "Select a model",
+        datasetSelectLabel: "Dataset",
+        datasetSelectPlaceholder: "Select a dataset",
+>>>>>>> Stashed changes
     }
+
+
 }

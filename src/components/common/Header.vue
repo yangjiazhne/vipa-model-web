@@ -151,7 +151,7 @@ export default {
 
       .name {
         width: 20%;
-        font-size: 30px;
+        font-size: 18px;
         font-weight: bolder;
         color: rgb(0, 0, 0);
       }
@@ -167,7 +167,7 @@ export default {
           padding-right: 10px;
           height: 20px;
           text-decoration: none;
-          font-size: 24px;
+          font-size: 15px;
           margin: 0 20px;
           white-space: nowrap;
         }
@@ -220,7 +220,7 @@ export default {
         .el-dropdown-link {
           cursor: pointer;
           color: rgb(0, 0, 0);
-          font-size: 20px;
+          font-size: 15px;
         }
 
         .el-icon-arrow-down {

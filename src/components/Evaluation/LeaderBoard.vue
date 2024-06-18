@@ -271,7 +271,7 @@ export default {
 
   .leader-board-title{
     margin-bottom: 20px;
-    font-size: 30px;
+    font-size: 22px;
   }
   
   .block {
